@@ -6,19 +6,19 @@
 
 <div *ngIf="selectedCategory === 'Professors' && xmlData?.Professors">
     <div *ngFor="let professor of xmlData.Professors.children?.Professor">
-        <h3 *ngIf="professor.attributes.Name.known && professor.attributes.LastName.value; else unknownAttr">
+        <h3 *ngIf="professor.attributes.Name.known && professor.attributes.LastName.known; else unknownAttr">
             {{ professor.attributes.Name.value }} {{ professor.attributes.LastName.value }}
         </h3>
-        <h3 #unknownAttr>
-            {{ professor.attributes.Name }} {{ professor.attributes.LastName }}
-        </h3>
+        <ng-template #unknownAttr>
+            <h3>{{ professor.attributes.Name }} {{ professor.attributes.LastName }}</h3>
+        </ng-template>
         <ul>
             <li *ngFor="let attribute of keyValue(professor.attributes)">
                 <span *ngIf="attribute.value.known; else unknownAttr">
                     {{ attribute.key }}: <input type="text" value="{{ attribute.value.value }}">
                 </span>
                 <ng-template #unknownAttr>
-                    {{ attribute.key }}: {{ attribute.value }}
+                    <span>{{ attribute.key }}: {{ attribute.value }}</span>
                 </ng-template>
             </li>
         </ul>
@@ -27,19 +27,19 @@
 
 <div *ngIf="selectedCategory === 'Students' && xmlData?.Students">
     <div *ngFor="let student of xmlData.Students.children?.Student">
-        <h3 *ngIf="student.attributes.Name.known && student.attributes.LastName.value; else unknownAttr">
-            {{ student.attributes.Name.value }} {{ student.attributes.LastName.value }}
+        <h3 *ngIf="student.attributes.StudentName.known && student.attributes.StudentLastName.known; else unknownAttr">
+            {{ student.attributes.StudentName.value }} {{ student.attributes.StudentLastName.value }}
         </h3>
-        <h3 #unknownAttr>
-            {{ student.attributes.Name }} {{ student.attributes.LastName }}
-        </h3>
+        <ng-template #unknownAttr>
+            <h3>{{ student.attributes.StudentName }} {{ student.attributes.StudentLastName }}</h3>
+        </ng-template>
         <ul>
             <li *ngFor="let attribute of keyValue(student.attributes)">
                 <span *ngIf="attribute.value.known; else unknownAttr">
                     {{ attribute.key }}: <input type="text" value="{{ attribute.value.value }}">
                 </span>
                 <ng-template #unknownAttr>
-                    {{ attribute.key }}: {{ attribute.value }}
+                    <span>{{ attribute.key }}: {{ attribute.value }}</span>
                 </ng-template>
             </li>
         </ul>
@@ -52,7 +52,7 @@
                         {{ attribute.key }}: <input type="text" value="{{ attribute.value.value }}">
                     </span>
                     <ng-template #unknownAttr>
-                        {{ attribute.key }}: {{ attribute.value }}
+                        <span>{{ attribute.key }}: {{ attribute.value }}</span>
                     </ng-template>
                 </div>
             </div>
@@ -63,7 +63,7 @@
                         {{ attribute.key }}: <input type="text" value="{{ attribute.value.value }}">
                     </span>
                     <ng-template #unknownAttr>
-                        {{ attribute.key }}: {{ attribute.value }}
+                        <span>{{ attribute.key }}: {{ attribute.value }}</span>
                     </ng-template>
                 </div>
             </div>
@@ -75,7 +75,7 @@
                                 {{ pet.key }}: <input type="text" value="{{ pet.value.value }}">
                             </span>
                             <ng-template #unknownAttr>
-                                {{ pet.key }}: {{ pet.value }}
+                                <span>{{ pet.key }}: {{ pet.value }}</span>
                             </ng-template>
                         </div>
                     </li>
@@ -87,13 +87,12 @@
 
 <div *ngIf="selectedCategory === 'Grades' && xmlData?.Grades">
     <div *ngFor="let grade of xmlData.Grades.children?.Grade">
-        <h3>Grade ID: {{ grade.attributes.Id.value }}</h3>
         <h3 *ngIf="grade.attributes.Id.known; else unknownAttr">
             Grade ID: {{ grade.attributes.Id.value }}
         </h3>
-        <h3 #unknownAttr>
-            Grade ID: {{ grade.attributes.Id }}
-        </h3>
+        <ng-template #unknownAttr>
+            <h3>Grade ID: {{ grade.attributes.Id }}</h3>
+        </ng-template>
         <ul>
             <li *ngFor="let attribute of keyValue(grade.attributes)">
                 <span *ngIf="attribute.value.known; else unknownAttr">
