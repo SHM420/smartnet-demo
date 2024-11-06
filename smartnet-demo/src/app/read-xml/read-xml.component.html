@@ -1,7 +1,12 @@
 <div>
-    <button (click)="showData('Professors')">Show Professors</button>
-    <button (click)="showData('Students')">Show Students</button>
-    <button (click)="showData('Grades')">Show Grades</button>
+    <div class="university-btns">
+        <button (click)="showData('Professors')">Show Professors</button>
+        <button (click)="showData('Students')">Show Students</button>
+        <button (click)="showData('Grades')">Show Grades</button>
+    </div>
+    <div class="export-btn">
+        <button (click)="exportData()">Export</button>
+    </div>
 </div>
 
 <div *ngIf="selectedCategory === 'Professors' && data['Professor']">
@@ -13,7 +18,7 @@
                     {{ attribute.key }}: <input type="text" value="{{ attribute.value.value }}" [attr.data-attribute]="attribute.key" [attr.data-known]="attribute.value.known">
                 </span>
                 <ng-template #unknownAttr>
-                    <span>{{ attribute.key }}: <input type="text" value="{{ attribute.value.value }}" [attr.data-attribute]="attribute.key" [attr.data-known]="attribute.value.known" readonly /></span>
+                    <span>{{ attribute.key }}: <input type="text" value="{{ attribute.value.value }}" [attr.data-attribute]="attribute.key" [attr.data-known]="attribute.value.known" readonly> /></span>
                 </ng-template>
             </li>
         </ul>

@@ -7,6 +7,7 @@ import { Professor } from '../types/Professor';
 import { Student } from '../types/Student';
 import { Grade } from '../types/Grade';
 import { Pet } from '../types/Pet';
+import { XmlExportService } from '../export-xml/export-xml.component';
 
 @Component({
   selector: 'app-root',
@@ -250,6 +251,36 @@ export class ReadXmlComponent implements OnInit {
     localStorage.setItem(category, JSON.stringify(parsedData));
     this.showData(category);
   }
+
+  exportData() {
+    const universityData: any = {
+      Name: 'Smartnet_Technologies_Demo',
+      Version: '1.0',
+      Professors: this.getCategoryData('Professors'),
+      Students: this.getCategoryData('Students'),
+      Grades: this.getCategoryData('Grades'),
+    };
+
+    // Log the constructed university data
+    console.log('University Data:', universityData);
+    const xmlExportService = new XmlExportService();
+    const xmlString = xmlExportService.exportToXml(universityData);
+
+    const blob = new Blob([xmlString], { type: 'application/xml' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'university_data.xml';
+    link.click();
+  }
+
+  private getCategoryData(category: 'Professors' | 'Students' | 'Grades') {
+    const categoryData = localStorage.getItem(category);
+    if (categoryData) {
+      return JSON.parse(categoryData);
+    }
+    return [];
+  }
+
   
   keyValue(obj: any): Array<{ key: string, value: any }> {
     return Object.keys(obj).map(key => ({ key, value: obj[key] }));
