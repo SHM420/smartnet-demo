@@ -1,4 +1,166 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.main {
+    height: 100vh;
+    overflow: hidden;
+    background: #007369;
+
+    .container {
+        height: 650px !important;
+        width: 80%;
+        overflow-y: scroll !important;
+        background-color: #fefefe;
+        border-radius: 10px;
+        padding: 10px;
+
+        .btns-container {
+            justify-content: space-between !important;
+            padding: 10px;
+
+            .university-btns {
+                justify-content: space-between !important;
+                gap: 20px;
+
+                button {
+                    border: none;
+                    border-radius: 10px;
+                    color: white;
+                    background: #005A5B;
+                    padding: 20px 30px;
+                }
+            }
+        }
+
+        .category-container {
+            padding: 10px 20px;
+
+            .card {
+                justify-content: space-around !important;
+                background-color: #9FC131;
+                border-radius: 10px;
+                margin-bottom: 10px;
+                color: #fefefe;
+                padding: 20px 0;
+
+                hr {
+                    border: 1px solid #86a910;
+                    height: 80px;
+                    transform: rotate(90%);
+                }
+
+                .card-desc {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+
+                    li {
+                        list-style-type: none;
+
+                        input {
+                            background: transparent;
+                            outline: none;
+                            border: none;
+                            border-bottom: 2px solid #86a910;
+                        }
+                    }
+                }
+            }
+        }
+
+        .students-container {
+            padding: 10px 20px;
+
+            .card-name {
+                grid-area: cardNameArea;
+            }
+
+            .card-desc {
+                grid-area: cardDescArea;
+            }
+
+            .secondary-card {
+                grid-area: secondaryArea;
+            }
+
+            .student-hr {
+                grid-area: hrArea;
+                width: 100%;
+                border: 1px solid #86a910;
+                margin: 10px auto !important;
+            }
+
+            .card-desc,
+            .secondary-card .scard-desc {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+
+                ul li {
+                    list-style-type: none;
+                }
+
+                input {
+                    background: transparent;
+                    outline: none;
+                    border: none;
+                    border-bottom: 2px solid #86a910;
+                }
+            }
+
+            .primary-card {
+                display: grid;
+                grid-template-areas: "cardNameArea cardDescArea"
+                                     "hrArea hrArea"
+                                     "secondaryArea secondaryArea";
+                border-radius: 10px;
+                background: #9FC131;
+                margin-bottom: 10px;
+                justify-content: space-between !important;
+                padding: 20px 30px;
+                color: #fefefe;
+
+                .secondary-card {
+                    .pets-main {
+                        margin-bottom: 20px;
+
+                        h4 {
+                            margin: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 .input-readonly {
     border: none !important;
     pointer-events: none !important;
+}
+
+button {
+    cursor: pointer;
+    transition: all 200ms;
+}
+
+button:hover {
+    scale: 0.95;
+    transition: scale 200ms;
+}
+
+.save-btn {
+    margin-top: 10px;
+    padding: 20px 30px;
+    border: none;
+    border-radius: 10px;
+    background: #026c27;
+    color: #fefefe;
+}
+
+.flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

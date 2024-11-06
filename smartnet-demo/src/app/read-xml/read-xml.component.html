@@ -1,100 +1,122 @@
-<div>
-    <div class="university-btns">
-        <button (click)="showData('Professors')">Show Professors</button>
-        <button (click)="showData('Students')">Show Students</button>
-        <button (click)="showData('Grades')">Show Grades</button>
-    </div>
-    <div class="export-btn">
-        <button (click)="exportData()">Export</button>
-    </div>
-</div>
-
-<div *ngIf="selectedCategory === 'Professors' && data['Professor']">
-    <div *ngFor="let professor of data['Professor']">
-        <h3>{{ professor.attributes.Name.value }} {{ professor.attributes.LastName.value }}</h3>
-        <ul>
-            <li *ngFor="let attribute of keyValue(professor.attributes)">
-                <span *ngIf="attribute.value.known == true; else unknownAttr">
-                    {{ attribute.key }}: <input #inputElement type="text" value="{{ attribute.value.value }}" [attr.data-attribute]="attribute.key" [attr.data-known]="attribute.value.known">
-                </span>
-                <ng-template #unknownAttr>
-                    <span>{{ attribute.key }}: <input #inputElement type="text" value="{{ attribute.value?.value }}" [attr.data-attribute]="attribute.key" [attr.data-known]="attribute.value?.known" class="input-readonly" readonly /></span>
-                </ng-template>
-            </li>
-        </ul>
-    </div>
-    <button (click)="saveData('Professors')">Save Professors</button>
-</div>
-
-<div *ngIf="selectedCategory === 'Students' && data['Student']">
-    <div *ngFor="let student of data['Student']">
-        <h3>{{ student.attributes.StudentName.value }} {{ student.attributes.StudentLastName.value }}</h3>
-        <ul>
-            <li *ngFor="let attribute of keyValue(student.attributes)">
-                <span *ngIf="attribute.value.known; else unknownAttr">
-                    {{ attribute.key }}: <input #inputElement type="text" value="{{ attribute.value.value }}" [attr.data-attribute]="attribute.key" [attr.data-known]="attribute.value.known">
-                </span>
-                <ng-template #unknownAttr>
-                    <span>{{ attribute.key }}: <input #inputElement type="text" value="{{ attribute.value?.value }}" [attr.data-attribute]="attribute.key" [attr.data-known]="attribute.value?.known" class="input-readonly" readonly /></span>
-                </ng-template>
-            </li>
-        </ul>
-        <div *ngIf="student.children?.Pets">
-            <h4>Pets</h4>
-            
-            <div *ngIf="student.children.Pets.attributes">
-                <div *ngFor="let attribute of keyValue(student.children.Pets.attributes)">
-                    <span *ngIf="attribute.value.known; else unknownStudentAttr">
-                        {{ attribute.key }}: <input #inputElement type="text" value="{{ attribute.value.value }}" [attr.data-attribute]="attribute.key" [attr.data-known]="attribute.value.known">
-                    </span>
-                    <ng-template #unknownStudentAttr>
-                        <span>{{ attribute.key }}: <input #inputElement type="text" value="{{ attribute.value.value }}" [attr.data-attribute]="attribute.key" [attr.data-known]="attribute.value.known" class="input-readonly" readonly /></span>
-                    </ng-template>
-                </div>
+<div class="main flex">
+    <div class="container">
+        <div class="btns-container flex">
+            <div class="university-btns flex">
+                <button (click)="showData('Professors')">Show Professors</button>
+                <button (click)="showData('Students')">Show Students</button>
+                <button (click)="showData('Grades')">Show Grades</button>
             </div>
-
-            <div *ngIf="student.children.Pets.children.Pet.attributes; else morePets">
-                <div *ngFor="let attribute of keyValue(student.children.Pets.children.Pet.attributes)">
-                    <span *ngIf="attribute.value.known; else unknownAttr">
-                        {{ attribute.key }}: <input #inputElement type="text" value="{{ attribute.value.value }}" [attr.data-attribute]="attribute.key" [attr.data-known]="attribute.value.known">
-                    </span>
-                    <ng-template #unknownAttr>
-                        <p>{{ attribute.key }}: <input #inputElement type="text" value="{{ attribute.value.value }}" [attr.data-attribute]="attribute.key" [attr.data-known]="attribute.value.known" class="input-readonly" readonly /></p>
-                    </ng-template>
-                </div>
+            <div class="export-btn">
+                <button (click)="exportData()">
+                    <img src="../../assets/export.png" width="50px" height="50px" alt="">
+                </button>
             </div>
-            <ng-template #morePets>
-                <ol>
-                    <li *ngFor="let pets of student.children.Pets.children.Pet">
-                        <div *ngFor="let pet of keyValue(pets.attributes)">
-                            <span *ngIf="pet.value.known; else unknownAttr">
-                                {{ pet.key }}: <input #inputElement type="text" value="{{ pet.value.value }}" [attr.data-attribute]="pet.key" [attr.data-known]="pet.value.known">
+        </div>
+        
+        <div class="category-container" *ngIf="selectedCategory === 'Professors' && data['Professor']">
+            <div class="card flex" *ngFor="let professor of data['Professor']">
+                <div class="card-name">
+                    <img src="" alt="">
+                    <h3>{{ professor.attributes.Name.value }} {{ professor.attributes.LastName.value }}</h3>
+                </div>
+                <hr>
+                <ul class="card-desc">
+                    <li *ngFor="let attribute of keyValue(professor.attributes)">
+                        <span *ngIf="attribute.value.known == true; else unknownAttr">
+                            {{ attribute.key }}: <input #inputElement type="text" value="{{ attribute.value.value }}" [attr.data-attribute]="attribute.key" [attr.data-known]="attribute.value.known">
+                        </span>
+                        <ng-template #unknownAttr>
+                            <span>{{ attribute.key }}: <input #inputElement type="text" value="{{ attribute.value?.value }}" [attr.data-attribute]="attribute.key" [attr.data-known]="attribute.value?.known" class="input-readonly" readonly /></span>
+                        </ng-template>
+                    </li>
+                </ul>
+            </div>
+            <button class="save-btn" (click)="saveData('Professors')">Save Professors</button>
+        </div>
+        
+        <div class="students-container" *ngIf="selectedCategory === 'Students' && data['Student']">
+            <div class="primary-card" *ngFor="let student of data['Student']">
+                <div class="card-name">
+                    <img src="" alt="">
+                    <h3>{{ student.attributes.StudentName.value }} {{ student.attributes.StudentLastName.value }}</h3>
+                </div>
+                <ul class="card-desc">
+                    <li *ngFor="let attribute of keyValue(student.attributes)">
+                        <span *ngIf="attribute.value.known; else unknownAttr">
+                            {{ attribute.key }}: <input #inputElement type="text" value="{{ attribute.value.value }}" [attr.data-attribute]="attribute.key" [attr.data-known]="attribute.value.known">
+                        </span>
+                        <ng-template #unknownAttr>
+                            <span>{{ attribute.key }}: <input #inputElement type="text" value="{{ attribute.value?.value }}" [attr.data-attribute]="attribute.key" [attr.data-known]="attribute.value?.known" class="input-readonly" readonly /></span>
+                        </ng-template>
+                    </li>
+                </ul>
+                <hr class="student-hr">
+                <div class="secondary-card" *ngIf="student.children?.Pets">
+                    <div class="pets-main">
+                        <h4>Pets</h4>
+                        
+                        <div class="scard" *ngIf="student.children.Pets.attributes">
+                            <div class="scard-desc" *ngFor="let attribute of keyValue(student.children.Pets.attributes)">
+                                <span *ngIf="attribute.value.known; else unknownStudentAttr">
+                                    {{ attribute.key }}: <input #inputElement type="text" value="{{ attribute.value.value }}" [attr.data-attribute]="attribute.key" [attr.data-known]="attribute.value.known">
+                                </span>
+                                <ng-template #unknownStudentAttr>
+                                    <span>{{ attribute.key }}: <input #inputElement type="text" value="{{ attribute.value.value }}" [attr.data-attribute]="attribute.key" [attr.data-known]="attribute.value.known" class="input-readonly" readonly /></span>
+                                </ng-template>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="scard" *ngIf="student.children.Pets.children.Pet.attributes; else morePets">
+                        <div class="scard-desc" *ngFor="let attribute of keyValue(student.children.Pets.children.Pet.attributes)">
+                            <span *ngIf="attribute.value.known; else unknownAttr">
+                                {{ attribute.key }}: <input #inputElement type="text" value="{{ attribute.value.value }}" [attr.data-attribute]="attribute.key" [attr.data-known]="attribute.value.known">
                             </span>
                             <ng-template #unknownAttr>
-                                <span>{{ pet.key }}: <input #inputElement type="text" value="{{ pet.value.value }}" [attr.data-attribute]="pet.key" [attr.data-known]="pet.value.known" class="input-readonly" readonly /></span>
+                                <p>{{ attribute.key }}: <input #inputElement type="text" value="{{ attribute.value.value }}" [attr.data-attribute]="attribute.key" [attr.data-known]="attribute.value.known" class="input-readonly" readonly /></p>
                             </ng-template>
                         </div>
+                    </div>
+                    <ng-template #morePets>
+                    <div class="scard">
+                        <ol class="scard-desc">
+                            <li *ngFor="let pets of student.children.Pets.children.Pet">
+                                <div *ngFor="let pet of keyValue(pets.attributes)">
+                                    <span *ngIf="pet.value.known; else unknownAttr">
+                                        {{ pet.key }}: <input #inputElement type="text" value="{{ pet.value.value }}" [attr.data-attribute]="pet.key" [attr.data-known]="pet.value.known">
+                                    </span>
+                                    <ng-template #unknownAttr>
+                                        <span>{{ pet.key }}: <input #inputElement type="text" value="{{ pet.value.value }}" [attr.data-attribute]="pet.key" [attr.data-known]="pet.value.known" class="input-readonly" readonly /></span>
+                                    </ng-template>
+                                </div>
+                            </li>
+                        </ol>
+                    </div>
+                    </ng-template>
+                </div>
+            </div>
+            <button class="save-btn" (click)="saveData('Students')">Save Students</button>
+        </div>
+        
+        <div class="category-container" *ngIf="selectedCategory === 'Grades' && data['Grade']">
+            <div class="card flex" *ngFor="let grade of data['Grade']">
+                <div class="card-name">
+                    <img src="" alt="">
+                    <h3>Grade ID: {{ grade.attributes.Id.value }}</h3>
+                </div>
+                <hr>
+                <ul class="card-desc">
+                    <li *ngFor="let attribute of keyValue(grade.attributes)">
+                        <span *ngIf="attribute.value.known; else unknownAttr">
+                            {{ attribute.key }}: <input #inputElement type="text" value="{{ attribute.value.value }}" [attr.data-attribute]="attribute.key" [attr.data-known]="attribute.value.known">
+                        </span>
+                        <ng-template #unknownAttr>
+                            <span>{{ attribute.key }}: <input #inputElement type="text" value="{{ attribute.value.value }}" [attr.data-attribute]="attribute.key" [attr.data-known]="attribute.value.known" class="input-readonly" readonly /></span>
+                        </ng-template>
                     </li>
-                </ol>
-            </ng-template>
+                </ul>
+            </div>
+            <button class="save-btn" (click)="saveData('Grades')">Save Grades</button>
         </div>
     </div>
-    <button (click)="saveData('Students')">Save Students</button>
-</div>
-
-<div *ngIf="selectedCategory === 'Grades' && data['Grade']">
-    <div *ngFor="let grade of data['Grade']">
-        <h3>Grade ID: {{ grade.attributes.Id.value }}</h3>
-        <ul>
-            <li *ngFor="let attribute of keyValue(grade.attributes)">
-                <span *ngIf="attribute.value.known; else unknownAttr">
-                    {{ attribute.key }}: <input #inputElement type="text" value="{{ attribute.value.value }}" [attr.data-attribute]="attribute.key" [attr.data-known]="attribute.value.known">
-                </span>
-                <ng-template #unknownAttr>
-                    <span>{{ attribute.key }}: <input #inputElement type="text" value="{{ attribute.value.value }}" [attr.data-attribute]="attribute.key" [attr.data-known]="attribute.value.known" class="input-readonly" readonly /></span>
-                </ng-template>
-            </li>
-        </ul>
-    </div>
-    <button (click)="saveData('Grades')">Save Grades</button>
 </div>
