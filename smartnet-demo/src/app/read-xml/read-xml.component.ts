@@ -13,7 +13,7 @@ import { XmlExportService } from '../export-xml/export-xml.component';
   selector: 'app-root',
   standalone: true,
   templateUrl: './read-xml.component.html',
-  styleUrls: ['./read-xml.component.scss'],
+  styleUrl: './read-xml.component.scss',
   imports: [CommonModule]
 })
 
@@ -129,7 +129,7 @@ export class ReadXmlComponent implements OnInit {
   }
 
   saveData(category: 'Professors' | 'Students' | 'Grades') {
-    let singleForm = category.slice(0, -1); // Remove "s"
+    let singleForm = category.slice(0, -1);
     let existingData = localStorage.getItem(category);
     let parsedData = JSON.parse(existingData);
     let inputElements = document.querySelectorAll('input[type="text"]');
@@ -138,19 +138,20 @@ export class ReadXmlComponent implements OnInit {
     // Collect inputs
     inputElements.forEach(input => {
         if (input instanceof HTMLInputElement) {
-            let attributeKey = input.getAttribute('data-attribute');
-            let isKnown = input.getAttribute('data-known');
+          let attributeKey = input.getAttribute('data-attribute');
+          let isKnown = input.getAttribute('data-known');
 
-            if (attributeKey) {
-                inputs.push({
-                    attributes: {
-                        [attributeKey]: {
-                            value: input.value,
-                            known: isKnown
-                        }
-                    }
-                });
-            }
+          if (attributeKey) {
+            let boolIsKnown = (isKnown === 'true');
+            inputs.push({
+                attributes: {
+                  [attributeKey]: {
+                    value: input.value,
+                    known: boolIsKnown
+                  }
+                }
+            });
+          }
         }
     });
 
@@ -250,9 +251,11 @@ export class ReadXmlComponent implements OnInit {
     // Save updated data to localStorage
     localStorage.setItem(category, JSON.stringify(parsedData));
     this.showData(category);
+    console.log('this.showData(category)', this.showData(category))
   }
 
   exportData() {
+    console.log('OVO =>', this.data, this.xmlData)
     const universityData: any = {
       Name: 'Smartnet_Technologies_Demo',
       Version: '1.0',
@@ -280,8 +283,8 @@ export class ReadXmlComponent implements OnInit {
     }
     return [];
   }
-
   
+
   keyValue(obj: any): Array<{ key: string, value: any }> {
     return Object.keys(obj).map(key => ({ key, value: obj[key] }));
   }
