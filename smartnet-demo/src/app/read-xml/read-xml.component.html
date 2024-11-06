@@ -10,14 +10,15 @@
         <ul>
             <li *ngFor="let attribute of keyValue(professor.attributes)">
                 <span *ngIf="attribute.value.known; else unknownAttr">
-                    {{ attribute.key }}: <input type="text" value="{{ attribute.value.value }}">
+                    {{ attribute.key }}: <input type="text" value="{{ attribute.value.value }}" [attr.data-attribute]="attribute.key" [attr.data-known]="attribute.value.known">
                 </span>
                 <ng-template #unknownAttr>
-                    <span>{{ attribute.key }}: {{ attribute.value.value }}</span>
+                    <span>{{ attribute.key }}: <input type="text" value="{{ attribute.value.value }}" [attr.data-attribute]="attribute.key" [attr.data-known]="attribute.value.known" readonly /></span>
                 </ng-template>
             </li>
         </ul>
     </div>
+    <button (click)="saveData('Professors')">Save Professors</button>
 </div>
 
 <div *ngIf="selectedCategory === 'Students' && data['Student']">
@@ -26,10 +27,10 @@
         <ul>
             <li *ngFor="let attribute of keyValue(student.attributes)">
                 <span *ngIf="attribute.value.known; else unknownAttr">
-                    {{ attribute.key }}: <input type="text" value="{{ attribute.value.value }}">
+                    {{ attribute.key }}: <input type="text" value="{{ attribute.value.value }}" [attr.data-attribute]="attribute.key" [attr.data-known]="attribute.value.known">
                 </span>
                 <ng-template #unknownAttr>
-                    <span>{{ attribute.key }}: {{ attribute.value.value }}</span>
+                    <span>{{ attribute.key }}: <input type="text" value="{{ attribute.value.value }}" [attr.data-attribute]="attribute.key" [attr.data-known]="attribute.value.known" readonly /></span>
                 </ng-template>
             </li>
         </ul>
@@ -39,10 +40,10 @@
             <div *ngIf="student.children.Pets.attributes">
                 <div *ngFor="let attribute of keyValue(student.children.Pets.attributes)">
                     <span *ngIf="attribute.value.known; else unknownAttr">
-                        {{ attribute.key }}: <input type="text" value="{{ attribute.value.value }}">
+                        {{ attribute.key }}: <input type="text" value="{{ attribute.value.value }}" [attr.data-attribute]="attribute.key" [attr.data-known]="attribute.value.known">
                     </span>
                     <ng-template #unknownAttr>
-                        <span>{{ attribute.key }}: {{ attribute.value.value }}</span>
+                        <span>{{ attribute.key }}: <input type="text" value="{{ attribute.value.value }}" [attr.data-attribute]="attribute.key" [attr.data-known]="attribute.value.known" readonly /></span>
                     </ng-template>
                 </div>
             </div>
@@ -50,10 +51,10 @@
             <div *ngIf="student.children.Pets.children.Pet.attributes; else morePets">
                 <div *ngFor="let attribute of keyValue(student.children.Pets.children.Pet.attributes)">
                     <span *ngIf="attribute.value.known; else unknownAttr">
-                        {{ attribute.key }}: <input type="text" value="{{ attribute.value.value }}">
+                        {{ attribute.key }}: <input type="text" value="{{ attribute.value.value }}" [attr.data-attribute]="attribute.key" [attr.data-known]="attribute.value.known">
                     </span>
                     <ng-template #unknownAttr>
-                        <span>{{ attribute.key }}: {{ attribute.value.value }}</span>
+                        <span>{{ attribute.key }}: <input type="text" value="{{ attribute.value.value }}" [attr.data-attribute]="attribute.key" [attr.data-known]="attribute.value.known" readonly /></span>
                     </ng-template>
                 </div>
             </div>
@@ -62,10 +63,10 @@
                     <li *ngFor="let pets of student.children.Pets.children.Pet">
                         <div *ngFor="let pet of keyValue(pets.attributes)">
                             <span *ngIf="pet.value.known; else unknownAttr">
-                                {{ pet.key }}: <input type="text" value="{{ pet.value.value }}">
+                                {{ pet.key }}: <input type="text" value="{{ pet.value.value }}" [attr.data-attribute]="pet.key" [attr.data-known]="pet.value.known">
                             </span>
                             <ng-template #unknownAttr>
-                                <span>{{ pet.key }}: {{ pet.value.value }}</span>
+                                <span>{{ pet.key }}: <input type="text" value="{{ pet.value.value }}" [attr.data-attribute]="pet.key" [attr.data-known]="pet.value.known" readonly /></span>
                             </ng-template>
                         </div>
                     </li>
@@ -73,6 +74,7 @@
             </ng-template>
         </div>
     </div>
+    <button (click)="saveData('Students')">Save Students</button>
 </div>
 
 <div *ngIf="selectedCategory === 'Grades' && data['Grade']">
@@ -81,12 +83,13 @@
         <ul>
             <li *ngFor="let attribute of keyValue(grade.attributes)">
                 <span *ngIf="attribute.value.known; else unknownAttr">
-                    {{ attribute.key }}: <input type="text" value="{{ attribute.value.value }}">
+                    {{ attribute.key }}: <input type="text" value="{{ attribute.value.value }}" [attr.data-attribute]="attribute.key" [attr.data-known]="attribute.value.known">
                 </span>
                 <ng-template #unknownAttr>
-                    {{ attribute.key }}: {{ attribute.value.value }}
+                    <span>{{ attribute.key }}: <input type="text" value="{{ attribute.value.value }}" [attr.data-attribute]="attribute.key" [attr.data-known]="attribute.value.known" readonly /></span>
                 </ng-template>
             </li>
         </ul>
     </div>
+    <button (click)="saveData('Grades')">Save Grades</button>
 </div>
